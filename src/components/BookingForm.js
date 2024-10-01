@@ -1,25 +1,51 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 
-const BookingForm = () => {
+const BookingForm = ({timesReducer, updateTimes, initializeTimes, submitForm}) => {
     const[resDate, setResDate]= useState("");
     const[resTime, setResTime] = useState("");
     const[guests, setGuests]= useState(1);
     const[occasion, setOccasion]= useState("");
 
-    const [availableTimes, setAvailableTimes] = useState([
-      "17:00",
-      "18:00",
-      "19:00",
-      "20:00",
-      "21:00",
-      "22:00",
-    ]);
+    // Initialize availableTimes using useReducer
+    const [availableTimes, dispatch] = useReducer(timesReducer, []);
+
+    // Initialize the times on component mount
+    useEffect(() => {
+        const initTimes = async () => {
+            const action = await initializeTimes();
+            dispatch(action);
+        };
+        initTimes();
+    }, [initializeTimes]);
+
 
 const handleSubmit = (e)=>{
     e.preventDefault();
     console.log({ resDate, resTime, guests, occasion });
+    const formData = {
+      resDate,
+      resTime,
+      guests,
+      occasion
+    };
+    submitForm(formData);
 }
+
+// const handleDateChange = (e) => {
+//   setResDate(e.target.value);
+//   dispatch({ type: 'UPDATE_TIMES', payload: e.target.value }); 
+// };
+
+const handleDateChange = async (e) => {
+  const selectedDate = e.target.value;
+  setResDate(selectedDate);
+  
+  // Fetch available times based on the selected date
+  const action = await updateTimes(selectedDate);
+  dispatch(action);
+};
+
 
   return (
 <>
@@ -30,16 +56,25 @@ const handleSubmit = (e)=>{
    <input type="date"
    id="res-date"
    value={resDate}
-   onChange={(e)=>setResDate(e.target.value)} />
+   onChange={handleDateChange} />
 
-   <label htmlFor="res-time">Choose time</label>
-   <select id="res-time" value={resTime}  onChange={(e)=> setResTime(e.target.value)}>
-    {availableTimes.map((time)=>(
-        <option key={time} value={time}>
-            {time}
-        </option>
-    ))}
-   </select>
+<label htmlFor="res-time">Choose time</label>
+          <select
+            id="res-time"
+            value={resTime}
+            onChange={(e) => setResTime(e.target.value)}
+            required
+          >
+            {availableTimes.length > 0 ? (
+              availableTimes.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))
+            ) : (
+              <option value="">No available times</option>
+            )}
+          </select>
 
    <label htmlFor="guests">Number of guests</label>
    <input type="number" id="guests" value={guests} min="1" max="10" onChange={(e)=> setGuests(e.target.value)} />
@@ -49,6 +84,7 @@ const handleSubmit = (e)=>{
       <option>Birthday</option>
       <option>Anniversary</option>
    </select>
+
    <input type="submit" value="Make Your reservation"/>
    </fieldset>
 </form>
