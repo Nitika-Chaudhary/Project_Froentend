@@ -5,6 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  background-image: url('./assets/images/background.jpg');
+  background-size:cover;
+  background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
 }
 
 code {

@@ -3,7 +3,7 @@ import React from 'react'
 const Home = () => {
   return (
     <div>
-      <h1>Little-Lemon Restaurant</h1>
+      <h2 style={{color:'white', margin:20, textAlign:"center"}}>Home-Page</h2>
     </div>
   )
 }

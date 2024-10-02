@@ -3,10 +3,10 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div>
-      <div><img src='Restaurant -logo'/></div>
+    <div style={{color:'white', margin:20, textAlign:"center"}} >
+      <div><img src='little-logo.jpg' alt='logo'/></div>
       <div>Contact</div>
-      <div>Social Media Links</div>
+     <div> Social Media Links</div>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import React from 'react'
 const Header = () => {
   return (
     <>
-        <img src='' alt='logo'/>
+       <h1 style={{color:'white', margin:20, textAlign:"center"}}>Little Lemon Restaurant</h1>
     </>
   )
 }

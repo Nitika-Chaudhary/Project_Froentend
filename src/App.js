@@ -30,10 +30,6 @@ const fetchData = async (date) => {
   return data;
 };
 
-// const initializeTimes = () => {
-//   return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-// };
-
 // Initialize times (returns action)
 const initializeTimes = async () => {
   const today = new Date().toISOString().split('T')[0]; // Format date as YYYY-MM-DD
@@ -81,6 +77,7 @@ function App() {
     <div>
         <nav>
           <ul>
+            <li> <img src='./assets/images/little-logo.jpg' alt='logo'/></li>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -99,7 +96,9 @@ function App() {
           <Route path="/confirmed" element={<ConfirmedBooking />} />
         </Routes>
       </div>
-   <BookingForm submitForm={submitForm} availableTimes={availableTimes} dispatch={dispatch}  timesReducer={timesReducer} updateTimes={updateTimes} initializeTimes={initializeTimes}/>
+   <BookingForm submitForm={submitForm} availableTimes={availableTimes}
+    dispatch={dispatch}  timesReducer={timesReducer} 
+    updateTimes={updateTimes} initializeTimes={initializeTimes}/>
     <Footer/>
     
     </>
